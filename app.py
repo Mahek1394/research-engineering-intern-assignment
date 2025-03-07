@@ -28,6 +28,9 @@ else:
 def load_data():
     try:
         df = pd.read_csv(uploaded_file)
+        uploaded_file.seek(0)
+# Second read
+        data2 = pd.read_csv(uploaded_file)
 
         # Ensure required columns exist
         expected_columns = {'date', 'subreddit', 'title', 'selftext', 'score', 
