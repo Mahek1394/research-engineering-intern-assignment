@@ -12,17 +12,16 @@ nltk.download('vader_lexicon')
 
 # Initialize Sentiment Analyzer
 sia = SentimentIntensityAnalyzer()
-uploaded_file = st.file_uploader("social_media_data", type="csv")
+
+    # For single file upload
+uploaded_file = st.file_uploader("social_media_data", accept_multiple_files=False)
 if uploaded_file is not None:
-    try:
-        # Use the uploaded_file object directly, not a file path
-        df = pd.read_csv(uploaded_file)
-        st.write("Data loaded successfully!")
-        st.dataframe(df)
-    except Exception as e:
-        st.error(f"Error loading data: {e}")
-else:
-    st.info("Please upload a file to continue")
+    df = pd.read_csv(uploaded_file)
+
+# For multiple file upload
+uploaded_files = st.file_uploader("social_media_data", accept_multiple_files=True)
+for upload_file in uploaded_files:
+    df = pd.read_csv(upload_file)
 # Load Data
 @st.cache_data
 def load_data():
