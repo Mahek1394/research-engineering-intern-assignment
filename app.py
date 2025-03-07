@@ -27,7 +27,7 @@ else:
 @st.cache_data
 def load_data():
     try:
-        df = pd.read_csv("social_media_data.csv")
+        df = pd.read_csv(uploaded_file)
 
         # Ensure required columns exist
         expected_columns = {'date', 'subreddit', 'title', 'selftext', 'score', 
