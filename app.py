@@ -12,7 +12,7 @@ nltk.download('vader_lexicon')
 
 # Initialize Sentiment Analyzer
 sia = SentimentIntensityAnalyzer()
-
+uploaded_file = st.file_uploader("social_media_data", type="csv")
 # Load Data
 @st.cache_data
 def load_data():
