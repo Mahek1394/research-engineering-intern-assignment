@@ -62,6 +62,10 @@ if not filtered_df.empty:
     st.write(f"**Title:** {article_info['title']}")
     st.write(f"**Subreddit:** {article_info['subreddit']}")
     st.write(f"**Top Hashtags:** {article_info['hashtags']}")
+    st.write("\n")
+    
+    st.markdown("### 📖 Storytelling Insight")
+    st.write("Social media posts often act as digital narratives, reflecting the pulse of public sentiment and engagement. The selected post, from the subreddit `{}`, has gained traction, attracting high levels of discussion and engagement. Hashtags like `{}` indicate the trending themes within the community.".format(article_info['subreddit'], article_info['hashtags']))
 else:
     st.warning("No articles found for the selected date range.")
 
@@ -76,6 +80,9 @@ if not filtered_df.empty:
     plt.title("Likes, Comments & Upvote Ratio Over Time")
     plt.legend()
     st.pyplot(fig)
+    
+    st.markdown("### 📊 Analysis of Trends")
+    st.write("Engagement metrics provide insight into how content resonates with the audience. A steady rise in `Likes` and `Comments` suggests strong user interaction. Spikes may indicate viral moments or controversies that triggered widespread discussions.")
 else:
     st.warning("No data available for engagement trends.")
 
@@ -87,6 +94,9 @@ if not filtered_df.empty:
     ax_sentiment.pie(sentiment_counts, labels=sentiment_counts.index, autopct='%1.1f%%', colors=['green', 'gray', 'red'])
     plt.title("Sentiment Breakdown")
     st.pyplot(fig_sentiment)
+    
+    st.markdown("### 🧐 Understanding Sentiments")
+    st.write("Analyzing sentiment distribution helps in identifying whether the audience's response is predominantly positive, negative, or neutral. A dominance of `Positive` sentiment suggests user appreciation, while `Negative` sentiment could indicate controversies or dissatisfaction.")
 else:
     st.warning("No sentiment data available.")
 
@@ -99,29 +109,11 @@ if text_data.strip():
     ax_wc.imshow(wordcloud, interpolation="bilinear")
     ax_wc.axis("off")
     st.pyplot(fig_wc)
+    
+    st.markdown("### 🔍 Key Discussion Points")
+    st.write("The Word Cloud highlights frequently used words, offering a glimpse into dominant discussion topics. Recurring words indicate themes that users are focusing on, shaping the overall narrative.")
 else:
     st.warning("No text data available for Word Cloud.")
-
-# Top Subreddits
-st.subheader("👥 Top Contributing Subreddits")
-if not filtered_df.empty:
-    subreddit_counts = filtered_df["subreddit"].value_counts().head(5)
-    fig_subreddit, ax_subreddit = plt.subplots()
-    sns.barplot(x=subreddit_counts.index, y=subreddit_counts.values, ax=ax_subreddit, palette='coolwarm')
-    plt.xticks(rotation=45)
-    plt.ylabel("Number of Posts")
-    plt.title("Top Contributing Subreddits")
-    st.pyplot(fig_subreddit)
-else:
-    st.warning("No subreddit data available.")
-
-# Top Comments
-st.subheader("💬 Top Comments")
-if not filtered_df.empty:
-    top_comments = filtered_df.sort_values(by="Likes", ascending=False)[["selftext", "Likes"]].head(5)
-    st.table(top_comments)
-else:
-    st.warning("No comments available.")
 
 # Engagement Summary
 st.subheader("🎯 Summary Statistics")
@@ -129,6 +121,9 @@ if not filtered_df.empty:
     st.write(f"**Total Score (Likes Equivalent):** {filtered_df['Likes'].sum():,}")
     st.write(f"**Total Comments:** {filtered_df['Comments'].sum():,}")
     st.write(f"**Average Upvote Ratio:** {filtered_df['upvote_ratio'].mean():.2f}")
+    
+    st.markdown("### 🏆 Final Insights")
+    st.write("From an engagement standpoint, this dataset highlights the power of social media in shaping discussions. By examining trends, sentiments, and engagement levels, we can understand user behavior and potential impact areas.")
 else:
     st.warning("No engagement data available.")
 
