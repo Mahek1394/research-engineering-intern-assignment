@@ -6,30 +6,9 @@ from wordcloud import WordCloud
 import nltk
 from nltk.sentiment import SentimentIntensityAnalyzer
 from datetime import datetime
-from streamlit_authenticator import Authenticate
-import yaml
-from yaml.loader import SafeLoader
 
 # Download necessary NLTK data
 nltk.download('vader_lexicon')
-
-# Authentication Setup
-with open('config.yaml') as file:
-    config = yaml.load(file, Loader=SafeLoader)
-
-authenticator = Authenticate(
-    config['credentials'], config['cookie']['name'], config['cookie']['key'],
-    config['cookie']['expiry_days'], config['preauthorized']
-)
-
-name, authentication_status, username = authenticator.login('Login', 'main')
-
-if authentication_status is False:
-    st.error("Username/password is incorrect")
-    st.stop()
-elif authentication_status is None:
-    st.warning("Please enter your credentials")
-    st.stop()
 
 # Initialize Sentiment Analyzer
 sia = SentimentIntensityAnalyzer()
@@ -152,9 +131,5 @@ if not filtered_df.empty:
     st.write(f"**Average Upvote Ratio:** {filtered_df['upvote_ratio'].mean():.2f}")
 else:
     st.warning("No engagement data available.")
-
-# Logout
-if authenticator.logout("Logout", "sidebar"):
-    st.stop()
 
 st.success("Dashboard Successfully Loaded!")
