@@ -2,3 +2,4 @@ matplotlib
 seaborn
 wordcloud
 nltk
+streamlit-authenticator
